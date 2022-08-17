@@ -1,5 +1,7 @@
 # sibfrontend4-stats-debugger
 
+## Make sure you're connected to the VPN
+
 ## Install Docker
 
 https://docs.docker.com/get-docker/
@@ -60,7 +62,7 @@ Make any changes to the json response and click the "Save" button
 
 The json response will resolve in the frontend application
 
-If there are more pending requests, they should automatically display in the json-editor, if not just refresh.
+If there are more pending requests, they should automatically display in the json-editor, if not just refresh. (sometimes the requests populate after the first one resolves, keep an eye on network tab)
 
 You can use "Clear Requests" to clear the pending requests in the json-editor.
 

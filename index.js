@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import { resolve } from 'path';
 import htmlExpress from 'html-express-js';
 import bodyParser from 'body-parser';
-import 'dotenv/config';
+
 const port = 3001;
 const app = express();
 const __dirname = resolve();
@@ -30,7 +30,7 @@ console.log('Debugger is', DISABLE_DEBUGGER ? 'disabled' : 'enabled');
 const getActiveRequest = (url) => requests.find(r => r.url === url);
 
 app.get('/stats2/*', async (req, res) => {
-  const url = `${process.env.STATS_DOMAIN}${req.url}`;
+  const url = `http://ca4-qa.global.nba.com${req.url}`;
   try {
     const response = await fetch(url, req.query);
     const data = await response.json();

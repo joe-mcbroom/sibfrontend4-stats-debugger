@@ -20,7 +20,7 @@ export const view = ({ data, activeRequestUrl, pendingRequests }, state) => html
 
     <body>
       <h3>${activeRequestUrl}</h3>
-      <h5>${parseInt(pendingRequests) || '0'} pending requests... (may more be loading, refresh if unsure)</h5>
+      <h5>${parseInt(pendingRequests) || '0'} pending requests... (more may be loading, refresh if unsure)</h5>
       <div id="jsoneditor"></div>
       <button onclick="save()">Save</button>
       <button onclick="clearRequests()">Clear Requests</button>

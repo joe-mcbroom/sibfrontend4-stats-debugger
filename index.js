@@ -6,8 +6,9 @@ import 'dotenv/config';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const port = 3001
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const port = 3001;
 const app = express();
 
 app.engine(
@@ -20,15 +21,17 @@ app.engine(
 app.set('views', `${__dirname}/public`);
 app.set('view engine', 'js');
 app.use(express.static(`${__dirname}/public`));
-app.use(bodyParser.json({
-  limit: '50mb',
-}));
+app.use(
+  bodyParser.json({
+    limit: '50mb',
+  })
+);
 
 const requests = [];
 let activeRequestUrl = '';
 const ALLOW_PASSTHROUGH = process.argv[2] || false;
 
-const getActiveRequest = (url) => requests.find(r => r.url === url);
+const getActiveRequest = url => requests.find(r => r.url === url);
 
 app.get('/stats2/*', async (req, res) => {
   const url = `${process.env.STATS_DOMAIN}${req.url}`;
@@ -44,7 +47,6 @@ app.get('/stats2/*', async (req, res) => {
     if (ALLOW_PASSTHROUGH) {
       return res.json(data);
     }
-
   } catch (error) {
     console.log(error);
   }
@@ -63,32 +65,36 @@ app.get('/stats2/*', async (req, res) => {
   };
 
   waitForUi();
-
-})
+});
 
 app.get('/json-editor', (req, res) => {
   const allRequestsHandled = requests.every(request => request.responseFromUi);
-  const pendingRequests = requests && requests.filter(request => !request.responseFromUi).length
+  const pendingRequests =
+    requests && requests.filter(request => !request.responseFromUi).length;
   if (!activeRequestUrl || allRequestsHandled) {
     res.render('json-editor', { data: { isLoading: true } });
   } else {
     const dataToSend = getActiveRequest(activeRequestUrl).data;
-    res.render('json-editor', { data: dataToSend, activeRequestUrl, pendingRequests });
+    res.render('json-editor', {
+      data: dataToSend,
+      activeRequestUrl,
+      pendingRequests,
+    });
   }
-})
+});
 
 app.post('/new-json', ({ body }, res) => {
   const { newData, activeRequestUrl } = body;
   const request = getActiveRequest(activeRequestUrl);
   request.responseFromUi = newData;
   res.send('ok');
-})
+});
 
 app.get('/clear-requests', (req, res) => {
   requests.length = 0;
   res.send('ok');
-})
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});

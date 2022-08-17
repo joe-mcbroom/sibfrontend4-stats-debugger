@@ -4,7 +4,7 @@ import { resolve } from 'path';
 import htmlExpress from 'html-express-js';
 import bodyParser from 'body-parser';
 import 'dotenv/config';
-const port = 3001
+const port = 3001;
 const app = express();
 const __dirname = resolve();
 
@@ -24,7 +24,8 @@ app.use(bodyParser.json({
 
 const requests = [];
 let activeRequestUrl = '';
-const ALLOW_PASSTHROUGH = process.argv[2] || false;
+const DISABLE_DEBUGGER = process.argv[2] || false;
+console.log('Debugger is', DISABLE_DEBUGGER ? 'disabled' : 'enabled');
 
 const getActiveRequest = (url) => requests.find(r => r.url === url);
 
@@ -39,7 +40,7 @@ app.get('/stats2/*', async (req, res) => {
       data,
       responseFromUi: null,
     });
-    if (ALLOW_PASSTHROUGH) {
+    if (DISABLE_DEBUGGER) {
       return res.json(data);
     }
 

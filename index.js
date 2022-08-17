@@ -1,12 +1,14 @@
 import express from 'express';
 import fetch from 'node-fetch';
-import { resolve } from 'path';
 import htmlExpress from 'html-express-js';
 import bodyParser from 'body-parser';
 import 'dotenv/config';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const port = 3001
 const app = express();
-const __dirname = resolve();
 
 app.engine(
   'js',

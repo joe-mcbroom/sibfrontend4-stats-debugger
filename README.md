@@ -1,13 +1,23 @@
 # sibfrontend4-stats-debugger
 
-## Run Docker container
+## Install Docker
+
+https://docs.docker.com/get-docker/
+
+## Clone Repository
+clone repo and `cd statsDebugger`
+
+## Build and Run Docker container
 
 ```bash
+/* The build command will only need to be run once */
 docker build -t stats-debugger .
+
+/* The run command will need to run every time you want to run the container */
 docker run -p 3001:3001 stats-debugger
 ```
 
-## Kill Docker container
+## How to Kill Docker container
 
 ```bash
 docker ps -q --filter ancestor=stats-debugger | xargs docker rm --force 
